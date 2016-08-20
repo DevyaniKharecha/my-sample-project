@@ -18,6 +18,9 @@ class TestController extends Controller
 
         $Beatles = ['John', 'Paul', 'George', 'Ringo'];
 
+        alert()->overlay('Problem', 'Cannot hear', 'error');
+
+
         return view('test.index', compact('Beatles'));
 
     }
