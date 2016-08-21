@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
+use App\Exceptions\UnauthorizedException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
@@ -41,10 +42,60 @@ class Handler extends ExceptionHandler
      * @param  \Exception  $exception
      * @return \Illuminate\Http\Response
      */
-    public function render($request, Exception $exception)
+    public function render($request, Exception $e)
     {
-        return parent::render($request, $exception);
+
+        switch($e){
+
+            case ($e instanceof ModelNotFoundException):
+
+                return $this->renderException($e);
+                break;
+
+            case ($e instanceof NotFoundHttpException):
+
+                return $this->renderException($e);
+                break;
+
+            case ($e instanceof UnauthorizedException):
+
+                return $this->renderException($e);
+                break;
+
+            default:
+
+                return parent::render($request, $e);
+
+        }
     }
+
+    protected function renderException($e)
+    {
+
+        switch ($e){
+
+            case ($e instanceof ModelNotFoundException):
+                return response()->view('errors.404', [], 404);
+                break;
+
+            case ($e instanceof NotFoundHttpException):
+
+                return response()->view('errors.404', [], 404);
+                break;
+
+            case ($e instanceof UnauthorizedException):
+                return response()->view('errors.unauthorized');
+                break;
+
+            default:
+                return (new SymfonyDisplayer(config('app.debug')))
+                    ->createResponse($e);
+
+        }
+
+    }
+
+
 
     /**
      * Convert an authentication exception into an unauthenticated response.

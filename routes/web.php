@@ -11,15 +11,24 @@
 |
 */
 
-// home page route
+// Auth routes
+
+Auth::routes();
+
+// Home page route
 
 Route::get('/', 'PagesController@index');
 
-
-//test route
+//Test route
 
 Route::get('test', 'TestController@index');
 
-Auth::routes();
+// Widget routes
+
+Route::get('widget/create', ['as' => 'widget.create', 'uses' => 'WidgetController@create']);
+
+Route::get( 'widget/{id}-{slug?}', ['as' => 'widget.show', 'uses' => 'WidgetController@show']);
+
+Route::resource('widget', 'WidgetController', ['except' => ['show', 'create']]);
 
 

@@ -18,10 +18,11 @@ class TestController extends Controller
 
         $Beatles = ['John', 'Paul', 'George', 'Ringo'];
 
+
         alert()->overlay('Problem', 'Cannot hear', 'error');
+        //alert()->overlay('Listen', 'I hear Beatle music!', 'success');
 
-
-        return view('test.index', compact('Beatles'));
+        return view('test.index', compact('Beatles', 'widgets'));
 
     }
 
