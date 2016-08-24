@@ -1,7 +1,15 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: billk
- * Date: 8/21/16
- * Time: 3:04 PM
- */
+@extends('layouts.master')
+
+@section('content')
+
+    <div class="alert alert-danger alert-dismissible alert-important" role="alert">
+
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+
+        <strong>Oh Snap!</strong> You are not authorized to do this...
+
+    </div>
+
+@endsection

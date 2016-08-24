@@ -3,9 +3,15 @@
 namespace App\Exceptions;
 
 use Exception;
+use App\Exceptions\NoActiveAccountException;
 use App\Exceptions\UnauthorizedException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use App\Exceptions\AlreadySyncedException;
+use App\Exceptions\ConnectionNotAcceptedException;
+use App\Exceptions\CredentialsDoNotMatchException;
+use App\Exceptions\EmailAlreadyInSystemException;
+use App\Exceptions\EmailNotProvidedException;
 
 class Handler extends ExceptionHandler
 {
@@ -47,7 +53,36 @@ class Handler extends ExceptionHandler
 
         switch($e){
 
+            case ($e instanceof AlreadySyncedException):
+
+                return $this->renderException($e);
+                break;
+
+            case ($e instanceof ConnectionNotAcceptedException):
+
+                return $this->renderException($e);
+                break;
+
+            case ($e instanceof CredentialsDoNotMatchException):
+
+                return $this->renderException($e);
+                break;
+
+            case ($e instanceof EmailAlreadyInSystemException):
+
+                return $this->renderException($e);
+                break;
+
+            case ($e instanceof EmailNotProvidedException):
+
+                return $this->renderException($e);
+                break;
+
             case ($e instanceof ModelNotFoundException):
+
+                return $this->renderException($e);
+                break;
+            case ($e instanceof NoActiveAccountException):
 
                 return $this->renderException($e);
                 break;
@@ -74,8 +109,36 @@ class Handler extends ExceptionHandler
 
         switch ($e){
 
+            case ($e instanceof AlreadySyncedException):
+
+                return response()->view('errors.already-synced');
+                break;
+
+            case ($e instanceof ConnectionNotAcceptedException):
+
+                return response()->view('errors.connection-not-accepted');
+                break;
+
+            case ($e instanceof CredentialsDoNotMatchException):
+
+                return response()->view('errors.credentials-do-not-match');
+                break;
+
+            case ($e instanceof EmailAlreadyInSystemException):
+
+                return response()->view('errors.email-already-in-system');
+                break;
+
+            case ($e instanceof EmailNotProvidedException):
+                return response()->view('errors.email-not-provided');
+                break;
+
             case ($e instanceof ModelNotFoundException):
                 return response()->view('errors.404', [], 404);
+                break;
+
+            case ($e instanceof NoActiveAccountException):
+                return response()->view('errors.no-active-account');
                 break;
 
             case ($e instanceof NotFoundHttpException):

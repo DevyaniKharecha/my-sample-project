@@ -8,6 +8,7 @@ use App\Widget;
 use Redirect;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
+use App\Exceptions\UnauthorizedException;
 
 class WidgetController extends Controller
 {
@@ -16,7 +17,8 @@ class WidgetController extends Controller
     public function __construct()
     {
 
-        $this->middleware('auth', ['except' => ['index', 'show']] );
+        $this->middleware(['auth', 'admin'], ['except' => ['index', 'show']] );
+        //$this->middleware('admin', ['except' => ['index', 'show']]);
 
     }
 
@@ -105,6 +107,12 @@ class WidgetController extends Controller
     {
         $widget = Widget::findOrFail($id);
 
+        if ( ! $this->adminOrCurrentUserOwns($widget)){
+
+            throw new UnauthorizedException;
+
+        }
+
         return view('widget.edit', compact('widget'));
     }
 
@@ -124,9 +132,9 @@ class WidgetController extends Controller
 
         $widget = Widget::findOrFail($id);
 
-        if ($this->userNotOwnerOf($widget)){
+        if ( ! $this->adminOrCurrentUserOwns($widget)){
 
-            dd('you are not the owner');
+            throw new UnauthorizedException;
 
         }
 
