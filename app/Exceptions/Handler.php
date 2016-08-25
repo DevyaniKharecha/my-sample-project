@@ -3,8 +3,6 @@
 namespace App\Exceptions;
 
 use Exception;
-use App\Exceptions\NoActiveAccountException;
-use App\Exceptions\UnauthorizedException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use App\Exceptions\AlreadySyncedException;
@@ -12,6 +10,9 @@ use App\Exceptions\ConnectionNotAcceptedException;
 use App\Exceptions\CredentialsDoNotMatchException;
 use App\Exceptions\EmailAlreadyInSystemException;
 use App\Exceptions\EmailNotProvidedException;
+use App\Exceptions\NoActiveAccountException;
+use App\Exceptions\TransactionFailedException;
+use App\Exceptions\UnauthorizedException;
 
 class Handler extends ExceptionHandler
 {
@@ -92,6 +93,11 @@ class Handler extends ExceptionHandler
                 return $this->renderException($e);
                 break;
 
+            case ($e instanceof TransactionFailedException):
+
+                return $this->renderException($e);
+                break;
+
             case ($e instanceof UnauthorizedException):
 
                 return $this->renderException($e);
@@ -144,6 +150,11 @@ class Handler extends ExceptionHandler
             case ($e instanceof NotFoundHttpException):
 
                 return response()->view('errors.404', [], 404);
+                break;
+
+            case ($e instanceof TransactionFailedException):
+
+                return response()->view('errors.transaction-failed', [], 404);
                 break;
 
             case ($e instanceof UnauthorizedException):

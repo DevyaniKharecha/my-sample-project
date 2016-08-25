@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use App\Provider;
+
 class TestController extends Controller
 {
     /**
@@ -16,10 +18,21 @@ class TestController extends Controller
     public function index()
     {
 
-        $Beatles = ['John', 'Paul', 'George', 'Ringo'];
+        //$Beatles = ['John', 'Paul', 'George', 'Ringo'];
 
+        //$authUser = User::find(1);
 
-        alert()->overlay('Problem', 'Cannot hear', 'error');
+          //$check = $authUser->providers()->where('source', 'facebook')->first();
+
+        //dd($check->source_id);
+
+        $socialUserId = '121212121212';
+
+        $answer = (Provider::where('source_id', $socialUserId)->exists()) ? true : false;
+
+        dd($answer);
+
+        //alert()->overlay('Problem', 'Cannot hear', 'error');
         //alert()->overlay('Listen', 'I hear Beatle music!', 'success');
 
         return view('test.index', compact('Beatles', 'widgets'));

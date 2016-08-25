@@ -9,16 +9,7 @@ use App\Exceptions\ConnectionNotAcceptedException;
 trait RoutesSocialUser
 {
 
-    /**
-     * @param $authUser
-     */
 
-    private function loginAuthUser($authUser)
-    {
-
-        Auth::login($authUser, true);
-
-    }
 
     private function logoutIfUserNotActiveStatus()
     {

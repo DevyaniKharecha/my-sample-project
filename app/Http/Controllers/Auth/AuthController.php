@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Exceptions\NoActiveAccountException;
-use App\Http\AuthTraits\Social\ManagesSocial;
+use App\Http\AuthTraits\Social\ManagesSocialAuth;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -13,7 +13,7 @@ use Socialite;
 
 class AuthController extends RegisterController
 {
-    use AuthenticatesUsers, ManagesSocial;
+    use AuthenticatesUsers, ManagesSocialAuth;
 
     protected $redirectTo = '/';
 
@@ -100,6 +100,17 @@ class AuthController extends RegisterController
         }
 
         return $this->sendFailedLoginResponse($request);
+    }
+
+    /**
+     * @param $authUser
+     */
+
+    private function loginAuthUser($authUser)
+    {
+
+        Auth::login($authUser, true);
+
     }
 
 

@@ -7,7 +7,7 @@ use Redirect;
 use Socialite;
 
 
-trait ManagesSocial
+trait ManagesSocialAuth
 {
 
     // the traits contain the methods needed for the handleProviderCallback
@@ -18,14 +18,21 @@ trait ManagesSocial
         SyncsSocialUsers,
         VerifiesSocialUsers;
 
+    private $provider;
+
+    private $approvedProviders = [ 'facebook', 'github'];
+
 
     public function handleProviderCallback($provider)
     {
+
+        $this->verifyProvider($this->provider = $provider);
+
         $socialUser = $this->getUserFromSocialite($provider);
 
-        $facebookEmail = $socialUser->getEmail();
+        $providerEmail = $socialUser->getEmail();
 
-        if ($this->socialUserHasNoEmail($facebookEmail)) {
+        if ($this->socialUserHasNoEmail($providerEmail)) {
 
             throw new EmailNotProvidedException;
 

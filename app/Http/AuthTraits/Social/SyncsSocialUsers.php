@@ -4,8 +4,9 @@ namespace App\Http\AuthTraits\Social;
 
 use App\Exceptions\AlreadySyncedException;
 use Illuminate\Support\Facades\Auth;
-use App\User;
 use App\Http\Requests;
+use App\SocialProvider;
+use App\Exceptions\CredentialsDoNotMatchException;
 
 trait SyncsSocialUsers
 {
@@ -15,11 +16,12 @@ trait SyncsSocialUsers
      * @return mixed
      */
 
-    private function accountSynced($facebookUser)
+    private function accountSynced($socialUser)
     {
-        if ($this->authUserEmailMatches($facebookUser)){
+        if ($this->authUserEmailMatches($socialUser)){
 
-            return $this->verfiyUserIds($facebookUser);
+
+            return $this->verifyUserIds($socialUser);
 
         }
 
@@ -27,11 +29,12 @@ trait SyncsSocialUsers
 
     }
 
-    private function checkIfAccountSyncedOrSync($facebookUser)
+    private function checkIfAccountSyncedOrSync($socialUser)
     {
+
         //if you are logged in and accountSynced is true, you are already synced
 
-        if ($this->accountSynced($facebookUser)){
+        if ($this->accountSynced($socialUser)){
 
             throw new AlreadySyncedException;
 
@@ -39,7 +42,7 @@ trait SyncsSocialUsers
 
             // check for email match
 
-            if ( ! $this->authUserEmailMatches($facebookUser)) {
+            if ( ! $this->authUserEmailMatches($socialUser)) {
 
                 throw new CredentialsDoNotMatchException;
 
@@ -47,7 +50,7 @@ trait SyncsSocialUsers
 
             // if emails match, then sync accounts
 
-            $this->syncUserAccountWithSocialData($facebookUser);
+            $this->syncUserAccountWithSocialData($socialUser);
 
             alert()->success('Confirmed!', 'You are now synced...');
 
@@ -57,17 +60,27 @@ trait SyncsSocialUsers
 
     }
 
-    private function syncUserAccountWithSocialData($facebookUser)
+    private function syncUserAccountWithSocialData($socialUser)
     {
 
-        // lookup user and update user record
+        // one last check to see if the social id already exists
 
-        $id = Auth::user()->id;
 
-        $user = User::findOrFail($id);
+        if ($this->socialIdAlreadyExists($socialUser)){
 
-        $user->update(['facebook_id' => $facebookUser->id,
-                       'avatar'      => $facebookUser->avatar]);
+            throw new CredentialsDoNotMatchException;
+
+        }
+
+        // lookup user id and update create provider record
+
+
+        SocialProvider::create([
+                            'user_id' => Auth::user()->id,
+                            'source'  => $this->provider,
+                            'source_id'  => $socialUser->id,
+                            'avatar'      => $socialUser->avatar
+        ]);
 
     }
 

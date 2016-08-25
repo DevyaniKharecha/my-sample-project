@@ -19,8 +19,6 @@ class User extends Authenticatable
     protected $fillable = [
                             'name',
                             'email',
-                            'facebook_id',
-                            'avatar',
                             'is_subscribed',
                             'is_admin',
                             'status_id',
@@ -54,6 +52,15 @@ class User extends Authenticatable
 
         return $this->hasMany('App\Widget');
     }
+
+    public function socialProviders()
+    {
+
+        return $this->hasMany('App\SocialProvider');
+
+    }
+
+
 
 
 }

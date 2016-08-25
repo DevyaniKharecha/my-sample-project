@@ -2,16 +2,18 @@
 
 namespace App\Http\AuthTraits\Social;
 
+use App\Exceptions\UnauthorizedException;
 use Illuminate\Support\Facades\Auth;
+use App\SocialProvider;
 use App\User;
 
 trait VerifiesSocialUsers
 {
 
-    private function authUserEmailMatches($facebookUser)
+    private function authUserEmailMatches($socialUser)
     {
 
-        return $facebookUser->email == Auth::user()->email;
+        return $socialUser->email == Auth::user()->email;
 
     }
 
@@ -20,10 +22,10 @@ trait VerifiesSocialUsers
      * @return mixed
      */
 
-    private function idAlreadyExists($facebookUser)
+    private function socialIdAlreadyExists($socialUser)
     {
 
-        return User::where('facebook_id', '=', $facebookUser->id)->exists();
+        return SocialProvider::where('source_id', '=', $socialUser->id)->exists();
 
     }
 
@@ -46,17 +48,52 @@ trait VerifiesSocialUsers
 
     }
 
+    private function verifyProvider($provider)
+    {
+
+        if ( ! in_array($provider, $this->approvedProviders)){
+
+            throw new UnauthorizedException();
+
+        }
+
+    }
+
 
     /**
-     * @param $facebookUser
+     * @param $socialUser
      * @return bool
      */
 
-    private function verfiyUserIds($facebookUser)
+    private function verifyUserIds($socialUser)
     {
 
-        return (Auth::user()->facebook_id == $facebookUser->id) ? true : false;
+        return (SocialProvider::where('source_id', $socialUser->id)
+                                  ->where('user_id', Auth::id())
+                                  ->exists()) ? true : false;
 
+
+    }
+
+    /**
+     * @param $socialUser
+     * @return mixed
+     */
+    private function userWhereEmailMatches($socialUser)
+    {
+        return User::where('email', $socialUser->email)->first();
+    }
+
+    /**
+     * @param $socialUser
+     * @param $authUser
+     * @return mixed
+     */
+    private function matchesIds($socialUser, User $authUser)
+    {
+        return $authUser->socialProviders()->where('source', $this->provider)
+            ->where('source_id', $socialUser->id)
+            ->first();
     }
 
 
