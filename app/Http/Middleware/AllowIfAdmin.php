@@ -19,8 +19,8 @@ class AllowIfAdmin
     {
 
 
-        if (Auth::check() && Auth::user()->isActiveStatus() == 10) {
-            if (Auth::user()->isAdmin() == 1)
+        if (Auth::check() && Auth::user()->isActiveStatus()) {
+            if (Auth::user()->isAdmin())
             {
 
                 return $next($request);
