@@ -70,6 +70,7 @@ trait VerifiesSocialUsers
 
         return (SocialProvider::where('source_id', $socialUser->id)
                                   ->where('user_id', Auth::id())
+                                  ->where('source', $this->provider)
                                   ->exists()) ? true : false;
 
 

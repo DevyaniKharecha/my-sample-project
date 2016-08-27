@@ -80,7 +80,7 @@ trait FindsOrCreatesUsers
         try{
 
             $authUser = User::create([
-                'name' => $socialUser->name,
+                'name' => $this->userName,
                 'email' => $socialUser->email,
                 'password' => $password,
                 'status_id' => 10,

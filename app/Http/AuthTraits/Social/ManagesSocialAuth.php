@@ -20,6 +20,8 @@ trait ManagesSocialAuth
 
     private $provider;
 
+    private $userName;
+
     private $approvedProviders = [ 'facebook', 'github'];
 
 
@@ -32,11 +34,15 @@ trait ManagesSocialAuth
 
         $providerEmail = $socialUser->getEmail();
 
+
         if ($this->socialUserHasNoEmail($providerEmail)) {
 
             throw new EmailNotProvidedException;
 
         }
+
+        $this->setSocialUserName($socialUser);
+
 
         if ($this->socialUserAlreadyLoggedIn()) {
 

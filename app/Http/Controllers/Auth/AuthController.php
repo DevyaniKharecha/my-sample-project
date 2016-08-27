@@ -102,17 +102,5 @@ class AuthController extends RegisterController
         return $this->sendFailedLoginResponse($request);
     }
 
-    /**
-     * @param $authUser
-     */
-
-    private function loginAuthUser($authUser)
-    {
-
-        Auth::login($authUser, true);
-
-    }
-
-
 
 }
