@@ -21,7 +21,7 @@
     <hr/>
 
 
-    <form class="form" role="form" method="POST" action="{{ url('/widget/'. $widget->id) }}">
+    <form class="form" role="form" method="POST" action="{{ url('/widget/'. $widget->id)  }}">
         <input type="hidden" name="_method" value="patch">
     {{ csrf_field() }}
 

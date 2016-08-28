@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-
+use App\Widget;
+use App\Profile;
 use App\Provider;
 
 class TestController extends Controller
@@ -20,22 +21,29 @@ class TestController extends Controller
 
         //$Beatles = ['John', 'Paul', 'George', 'Ringo'];
 
-        //$authUser = User::find(1);
+        $profile = Profile::find(4);
 
-          //$check = $authUser->providers()->where('source', 'facebook')->first();
+        $date = strtotime($profile->birthdate);
 
-        //dd($check->source_id);
+        //dd(is_string($date));
 
-        $socialUserId = '121212121212';
+        $date = Profile::formDate($date);
 
-        $answer = (Provider::where('source_id', $socialUserId)->exists()) ? true : false;
-
-        dd($answer);
+        dd($date);
 
         //alert()->overlay('Problem', 'Cannot hear', 'error');
         //alert()->overlay('Listen', 'I hear Beatle music!', 'success');
 
         return view('test.index', compact('Beatles', 'widgets'));
+
+    }
+
+    public static function formDate($date)
+    {
+        $date = strtotime($date);
+
+        return \Carbon\Carbon::parse($date)->format('Y-m-d');
+
 
     }
 

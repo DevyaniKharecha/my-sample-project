@@ -36,6 +36,16 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
 Route::get('privacy', 'PagesController@privacy');
 
+// Profile Route
+
+Route::get('show-profile', ['as' => 'show-profile',
+                            'uses' => 'ProfileController@showProfileToUser']);
+
+Route::get('my-profile', ['as' => 'my-profile',
+                          'uses' => 'ProfileController@myProfile']);
+
+Route::resource('profile', 'ProfileController');
+
 // Registration Routes...
 
 Route::get('register', 'Auth\AuthController@showRegistrationForm');
@@ -55,6 +65,10 @@ Route::get('terms-of-service', 'PagesController@terms');
 //Test route
 
 Route::get('test',  ['middleware' => 'auth', 'uses' => 'TestController@index']);
+
+// User route
+
+Route::resource('user', 'UserController');
 
 // Widget routes
 
