@@ -25,6 +25,10 @@ Route::post('logout', 'Auth\AuthController@logout');
 
 Route::get('/', ['as' => 'home', 'uses' => 'PagesController@index']);
 
+// Marketing Image
+
+Route::resource('marketing-image', 'MarketingImageController');
+
 // Password Reset Routes...
 
 Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm');
@@ -50,6 +54,12 @@ Route::resource('profile', 'ProfileController');
 
 Route::get('register', 'Auth\AuthController@showRegistrationForm');
 Route::post('register', 'Auth\AuthController@register');
+
+// Settings
+
+Route::get('settings', 'SettingsController@edit');
+Route::post('settings', ['as' => 'userUpdate',
+                         'uses' => 'SettingsController@update']);
 
 // Social routes
 

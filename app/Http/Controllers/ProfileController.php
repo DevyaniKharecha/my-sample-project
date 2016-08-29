@@ -94,7 +94,10 @@ class ProfileController extends Controller
 
         }
 
-        return view('profile.create');
+        $genders = [1 => 'Male', 0 => 'Female'];
+
+
+        return view('profile.create', compact('genders'));
     }
 
     /**

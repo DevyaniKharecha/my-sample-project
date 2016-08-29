@@ -13,14 +13,14 @@
         <ol class='breadcrumb'>
             <li><a href='/'>Home</a></li>
             <li><a href='/profile'>Profiles</a></li>
-            <li><a href='/profile/create</a>Create</li>
+            <li><a href='/profile/create'></a>Create</li>
         </ol>
 
     @else
 
         <ol class='breadcrumb'>
             <li><a href='/'>Home</a></li>
-            <li><a href='/profile/create</a>Create</li>
+            <li><a href='/profile/create'></a>Create</li>
         </ol>
 
     @endif
@@ -99,9 +99,10 @@
 
 
                 <select class="form-control" id="gender" name="gender">
-                    <option value="{{ old('gender') }}">{{ old('gender') ?
-                      (old('gender') == 1 ? 'Male' : 'Female')
-                      : 'Please Choose One'  }}</option>
+                    <option value="{{old('gender')}}">
+                        {{ ! is_null(old('gender')) ?
+                        (old('gender') == 1 ? 'Male' :'Female')
+                        : 'Please Choose One'}}</option>
                     <option value="1">Male</option>
                     <option value="0">Female</option>
                 </select>
