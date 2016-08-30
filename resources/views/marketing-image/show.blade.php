@@ -14,7 +14,18 @@
         <li><a href='/marketing-image/{{ $marketingImage->id }}'>{{ $marketingImage->image_name }}</a></li>
     </ol>
 
-    <h1>{{ $marketingImage->image_name }}</h1>
+    <h1>{{ $marketingImage->image_name }} Marketing Image</h1>
+
+    <div class="pull-left">
+
+
+        <a href="/marketing-image/{{ $marketingImage->id }}/edit">
+
+            <button type="button" class="btn btn-primary btn-lg">Edit Image</button></a>
+
+    </div>
+
+    <br><br>
 
     <hr/>
 
@@ -23,17 +34,6 @@
 
             <!-- Table -->
             <table class="table table-striped">
-
-                <tr>
-
-                    <td> <a href="/marketing-image/{{ $marketingImage->id }}/edit">
-
-                            <button type="button" class="btn btn-default">Edit</button></a></td>
-
-
-
-                </tr>
-
 
                 <tr>
 
@@ -77,6 +77,18 @@
 
                 <tr>
 
+                    <th>Image Weight</th>
+
+                </tr>
+
+                <tr>
+
+                    <td>{{ $marketingImage->image_weight }}</td>
+
+                </tr>
+
+                <tr>
+
                     <th>Primary Image</th>
 
 
@@ -113,12 +125,6 @@
                 </tr>
 
             </table>
-
-
-
-
-
-
 
     </div>
 

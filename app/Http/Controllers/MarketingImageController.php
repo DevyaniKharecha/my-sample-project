@@ -28,7 +28,7 @@ class MarketingImageController extends Controller
     {
         $thumbnailPath = $this->thumbnailPath;
 
-        $marketingImages = MarketingImage::paginate(10);
+        $marketingImages = MarketingImage::orderBy('image_weight', 'asc')->paginate(10);
 
         return view('marketing-image.index', compact('marketingImages', 'thumbnailPath'));
 
@@ -61,16 +61,18 @@ class MarketingImageController extends Controller
 
             'image_name'        => $request->get('image_name'),
             'image_extension'   => $request->file('image')->getClientOriginalExtension(),
+            'image_weight'      => $request->get('image_weight'),
             'is_active'         => $request->get('is_active'),
-            'is_featured'       => $request->get('is_featured'),
-            'image_weight'      => $request->get('image_weight')
+            'is_featured'       => $request->get('is_featured')
 
         ]);
 
         // save model
+
         $marketingImage->save();
 
         // get instance of file
+
         $file = $this->getUploadedFile();
 
         // pass in the file and the model
@@ -131,7 +133,7 @@ class MarketingImageController extends Controller
     {
         $marketingImage = MarketingImage::findOrFail($id);
 
-        $this->setUpdatedImageValues($request, $marketingImage);
+        $this->setUpdatedModelValues($request, $marketingImage);
 
         // if file, we have additional requirements before saving
 
@@ -201,9 +203,10 @@ class MarketingImageController extends Controller
      * @param $marketingImage
      */
 
-    private function setUpdatedImageValues(EditImageRequest $request, $marketingImage)
+    private function setUpdatedModelValues(EditImageRequest $request, $marketingImage)
     {
 
+        $marketingImage->image_weight = $request->get('image_weight');
         $marketingImage->is_active = $request->get('is_active');
         $marketingImage->is_featured = $request->get('is_featured');
 

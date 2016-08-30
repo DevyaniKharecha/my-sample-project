@@ -11,15 +11,13 @@
     <ol class='breadcrumb'>
         <li><a href='/'>Home</a></li>
         <li><a href='/marketing-image'>Marketing Images</a></li>
-        <li><a href='/marketing-image/{{ $marketingImage->id }}/edit'>{{ $marketingImage->image_name }}</a></li>
+        <li><a href='/marketing-image/{{ $marketingImage->id }}'>{{ $marketingImage->image_name }}</a></li>
         <li class='active'>Edit</li>
     </ol>
 
     <h2>Update Image</h2>
 
     <hr/>
-
-
 
     <!-- delete button -->
 
@@ -37,25 +35,27 @@
     <!-- image name no input -->
         <div>
 
+            <div class="control-label">
+               Image Name:
+
+            </div>
 
             <h4>{{ $marketingImage->image_name
-             . '.' .
-             $marketingImage->image_extension }} </h4>
-
-
+                   . '.' .
+                   $marketingImage->image_extension }}
+            </h4>
 
         </div>
 
-
+    <div class="control-label">Thumbnail:</div>
         <!-- image thumbnail -->
         <div>
 
-
             <img src="{{ $marketingImage->showImage($marketingImage, $thumbnailPath) }}">
 
-
-
         </div>
+
+    <br>
 
     <form class="form" role="form" method="POST"
           action="{{ url('/marketing-image/' . $marketingImage->id) }}"
@@ -65,11 +65,7 @@
 
         {{ csrf_field() }}
 
-
-
         <!-- is_active Form Input -->
-
-
 
         <div class="form-group{{ $errors->has('is_active') ? ' has-error' : '' }}">
 
@@ -119,6 +115,24 @@
 
         </div>
 
+        <!-- image_weight Form Input -->
+
+        <div class="form-group{{ $errors->has('image_weight') ? ' has-error' : '' }}">
+
+            <label class="control-label">Image Weight</label>
+
+            <input type="number" class="form-control" name="image_weight" value="{{ $marketingImage->image_weight }}">
+
+            @if ($errors->has('image_weight'))
+
+                <span class="help-block">
+                <strong>{{ $errors->first('image_weight') }}</strong>
+                </span>
+
+            @endif
+
+        </div>
+
         <!-- image file Form Input -->
 
         <div class="form-group{{ $errors->has('image') ? ' has-error' : '' }}">
@@ -138,6 +152,7 @@
 
             @endif
 
+            <!-- Submit Button -->
 
             <div class="form-group">
 
