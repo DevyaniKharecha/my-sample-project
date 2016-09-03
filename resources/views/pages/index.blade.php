@@ -17,8 +17,11 @@
         data-show-faces="true">
 </div>
 
+<example></example>
+
 @include('pages.slider')
 
+<br><br>
 <!-- Main jumbotron for a primary marketing message or call to action -->
 
 <div class="jumbotron">

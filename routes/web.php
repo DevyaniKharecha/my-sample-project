@@ -15,6 +15,10 @@
 
 Route::get('admin', ['as' => 'admin', 'uses' => 'AdminController@index']);
 
+// Api Routes
+
+Route::get('api/widget-data', 'ApiController@widgetData');
+
 // Authentication Routes...
 
 Route::get('login', 'Auth\AuthController@showLoginForm')->name('login');

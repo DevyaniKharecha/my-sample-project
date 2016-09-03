@@ -6,7 +6,7 @@
 
         @else
 
-            <div id="carousel-marketing-images" class="carousel slide" data-ride="carousel">
+            <div id="carousel-marketing-images"   class="carousel slide" data-ride="carousel" data-interval="false">
 
                 <!-- Indicators -->
 
@@ -24,7 +24,7 @@
                 <!-- Wrapper for slides -->
 
                     <div class="carousel-inner" role="listbox">
-                        <div class="item active marketing-carousel-img">
+                        <div class="item active">
 
                             <img src="{{ $featuredImage->showImage($featuredImage, $imagePath) }}"
                                  alt="{{ $featuredImage->image_name }}">
@@ -36,7 +36,7 @@
 
                         @foreach ($activeImages as $image)
 
-                            <div class="item marketing-carousel-img">
+                            <div class="item">
 
                                 <img src="{{ $image->showImage($image, $imagePath)}}"
                                      alt="{{ $image->image_name }}">
