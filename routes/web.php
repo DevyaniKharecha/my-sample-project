@@ -17,6 +17,8 @@ Route::get('admin', ['as' => 'admin', 'uses' => 'AdminController@index']);
 
 // Api Routes
 
+Route::get('api/marketing-image-data', 'ApiController@marketingImageData');
+
 Route::get('api/widget-data', 'ApiController@widgetData');
 
 // Authentication Routes...

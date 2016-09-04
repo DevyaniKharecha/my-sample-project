@@ -15,7 +15,7 @@ class GridQuery
 
         // set sort by column and direction
 
-        list($column, $direction) = static::setSort($request);
+        list($column, $direction) = static::setSort($request, $query);
 
 
         // search by keyword with column sort
@@ -38,12 +38,13 @@ class GridQuery
 
     }
 
-    public static function setSort(Request $request)
+    public static function setSort(Request $request, $query)
     {
+
         // set sort by column with default
 
-        $column = 'id';
-        $direction = 'asc';
+        list($column, $direction) = static::setDefaults($query);
+
 
         if ($request->has('column')) {
 
@@ -65,6 +66,32 @@ class GridQuery
         }
 
         return [$column, $direction];
+    }
+
+    public static function setDefaults($query)
+    {
+
+        switch ($query){
+
+            case $query instanceof MarketingImageQuery :
+
+                $column = 'image_weight';
+                $direction = 'asc';
+
+                break;
+
+            default:
+
+                $column = 'id';
+                $direction = 'asc';
+
+                break;
+
+        }
+
+        return list($column, $direction) = [$column, $direction];
+
+
     }
 
     public static function keywordFilter(Request $request, $query, $column, $direction)
