@@ -15,6 +15,8 @@
 
     <h2>Users</h2>
 
+    <user-chart></user-chart>
+
     <hr/>
 
     @if($users->count() > 0)

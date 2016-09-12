@@ -25,7 +25,7 @@ trait VerifiesSocialUsers
     private function socialIdAlreadyExists($socialUser)
     {
 
-        return SocialProvider::where('source_id', '=', $socialUser->id)->exists();
+        return SocialProvider::where('source_id', $socialUser->id)->exists();
 
     }
 

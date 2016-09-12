@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ChartHelpers\BuildsCharts;
 use Illuminate\Http\Request;
 use App\Queries\GridQueries\GridQuery;
 use App\Queries\GridQueries\WidgetQuery;
@@ -21,6 +22,15 @@ class ApiController extends Controller
     {
 
         return GridQuery::sendData($request, new MarketingImageQuery);
+    }
+
+    public function userChartData(Request $request, BuildsCharts $chart)
+    {
+
+        return $chart->buildChart($request, ['users', 'widgets']);
+
+
+
     }
 
 }
