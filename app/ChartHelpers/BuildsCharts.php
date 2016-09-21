@@ -43,6 +43,28 @@ class BuildsCharts
 
                     break;
 
+                case 'today' :
+
+                    $chart = new FormatsToday($tables);
+
+                    return response()->json($chart->data);
+
+                    break;
+
+                case 'yesterday' :
+
+                    $chart = new FormatsYesterday($tables);
+
+                    return response()->json($chart->data);
+
+                    break;
+
+                case 'custom' :
+
+                    $chart = new FormatsCustomDates($tables, $request);
+
+                    return response()->json($chart->data);
+
 
             }
 
@@ -57,7 +79,6 @@ class BuildsCharts
 
 
     }
-
     
 
 }

@@ -35,3 +35,15 @@ $factory->define(App\Widget::class, function ($faker) {
 
     ];
 });
+
+$factory->define(App\Gadget::class, function ($faker) {
+
+    $name = $faker->unique()->word . ' ' . $faker->unique()->word;
+
+
+    return [
+        'name' => $name,
+
+
+    ];
+});

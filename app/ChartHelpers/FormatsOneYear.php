@@ -46,9 +46,7 @@ class FormatsOneYear
 
         list($values1, $values2, $values3, $values4) = $this->finalFormatOfValues();
 
-        list($currentYear, $lastYear) = $this->finalFormatYearLabels($currentYear, $lastYear);
-
-        $data['data'] = compact('labels', 'values1', 'values2', 'values3', 'values4','currentYear', 'lastYear');
+        $data['data'] = compact('labels', 'values1', 'values2', 'values3', 'values4');
 
         $this->data = $data;
 
@@ -233,19 +231,7 @@ class FormatsOneYear
         return [$values1, $values2, $values3, $values4];
     }
 
-    /**
-     * @param $currentYear
-     * @param $lastYear
-     * @return array
-     */
-
-    private function finalFormatYearLabels($currentYear, $lastYear)
-    {
-        $currentYear = \Carbon\Carbon::parse($currentYear)->format('y');
-        $lastYear = \Carbon\Carbon::parse($lastYear)->format('y');
-
-        return [$currentYear, $lastYear];
-    }
+    
 
 
 }

@@ -27,7 +27,7 @@ class ApiController extends Controller
     public function userChartData(Request $request, BuildsCharts $chart)
     {
 
-        return $chart->buildChart($request, ['users', 'widgets']);
+        return $chart->buildChart($request, ['users', 'widgets', 'gadgets']);
 
 
 

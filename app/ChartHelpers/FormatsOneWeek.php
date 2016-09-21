@@ -171,7 +171,7 @@ class FormatsOneWeek
      * @param $lastWeek
      * @return array
      */
-    
+
     private function setValues($lastWeek)
     {
         $values1 = $this->setOneWeekValues($lastWeek, $this->rows1);
